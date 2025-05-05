@@ -157,7 +157,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
     );
   }
 
-  // Add this method to the PendudukListScreen class
   // void _showPendudukDetails(BuildContext context, Penduduk penduduk) {
   //   showDialog(
   //     context: context,
@@ -261,7 +260,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
   //                 ),
   //               ),
 
-  //               // Footer with buttons
   //               Padding(
   //                 padding: const EdgeInsets.all(16),
   //                 child: Row(
@@ -777,48 +775,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
       },
     );
   }
-
-  // Widget _buildAnimatedPendudukCard(Penduduk penduduk, int index) {
-  //   final animation = Tween<double>(begin: 0.0, end: 1.0).animate(
-  //     CurvedAnimation(
-  //       parent: _animationController,
-  //       curve: Interval(
-  //         (1 / 20) * index,
-  //         1.0,
-  //         curve: Curves.easeOut,
-  //       ),
-  //     ),
-  //   );
-
-  //   return FadeTransition(
-  //     opacity: animation,
-  //     child: SlideTransition(
-  //       position: Tween<Offset>(
-  //         begin: const Offset(0, 0.2),
-  //         end: Offset.zero,
-  //       ).animate(animation),
-  //       child: Padding(
-  //         padding: const EdgeInsets.only(bottom: 12.0),
-  //         child: PendudukCard(
-  //           penduduk: penduduk,
-  //           onTap: () => _showPendudukDetails(
-  //               context, penduduk), // Changed to show details
-  //           onEdit: () => Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder: (_) => AddEditPendudukScreen(penduduk: penduduk),
-  //             ),
-  //           ).then((_) {
-  //             // Refresh the list when returning from edit screen
-  //             setState(() {});
-  //           }),
-  //           onViewDetails: () => _showPendudukDetails(
-  //               context, penduduk), // New callback for view details
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _buildAnimatedPendudukCard(Penduduk penduduk, int index) {
     final animation = Tween<double>(begin: 0.0, end: 1.0).animate(
