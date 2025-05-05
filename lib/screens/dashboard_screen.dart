@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' show min;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pendataan_desa/screens/jadwal_rapat_screen.dart';
 import 'package:pendataan_desa/screens/laporan_screen.dart';
 import 'package:pendataan_desa/services/firestore_service.dart';
 import 'penduduk_list_screen.dart';
@@ -29,21 +30,16 @@ class _DashboardScreenState extends State<DashboardScreen>
   bool _isDataLoading = true;
   bool _isActivitiesLoading = true;
 
-  
   late Timer _timer;
   late String _currentTime;
 
-  
-  StreamSubscription? _activitiesSubscription;
   List<Map<String, dynamic>> _recentActivities = [];
 
-  
   int _totalPenduduk = 0;
   int _totalPendudukKawin = 0;
   int _totalPendudukPria = 0;
   int _totalPendudukWanita = 0;
 
-  
   late Map<String, int> _stats;
 
   @override
@@ -61,7 +57,6 @@ class _DashboardScreenState extends State<DashboardScreen>
       _updateTime();
     });
 
-    
     _stats = {
       "Total Penduduk": 0,
       "Penduduk Kawin": 0,
@@ -69,10 +64,9 @@ class _DashboardScreenState extends State<DashboardScreen>
       "Penduduk Wanita": 0,
     };
 
-    
     _loadUserData();
     _fetchStatistics();
-    _fetchRecentActivities();
+    _loadDummyData();
   }
 
   void _updateTime() {
@@ -87,11 +81,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   Future<void> _loadUserData() async {
-    
     await Future.delayed(const Duration(milliseconds: 800));
     if (mounted) {
       setState(() {
-        
         _username = "Admin Desa";
         _isLoading = false;
       });
@@ -110,7 +102,6 @@ class _DashboardScreenState extends State<DashboardScreen>
               pendudukList.map((penduduk) => penduduk.toMap()).toList());
 
       if (pendudukList != null) {
-        
         int totalPenduduk = pendudukList.length;
 
         int totalKawin = 0;
@@ -118,12 +109,10 @@ class _DashboardScreenState extends State<DashboardScreen>
         int totalWanita = 0;
 
         for (var penduduk in pendudukList) {
-          
           if (penduduk['statusNikah'] == 'Kawin') {
             totalKawin++;
           }
 
-          
           if (penduduk['gender'] == 'Laki-laki') {
             totalPria++;
           } else if (penduduk['gender'] == 'Perempuan') {
@@ -131,7 +120,6 @@ class _DashboardScreenState extends State<DashboardScreen>
           }
         }
 
-        
         if (mounted) {
           setState(() {
             _totalPenduduk = totalPenduduk;
@@ -139,7 +127,6 @@ class _DashboardScreenState extends State<DashboardScreen>
             _totalPendudukPria = totalPria;
             _totalPendudukWanita = totalWanita;
 
-            
             _stats = {
               "Total Penduduk": _totalPenduduk,
               "Penduduk Nikah": _totalPendudukKawin,
@@ -151,7 +138,6 @@ class _DashboardScreenState extends State<DashboardScreen>
           });
         }
       } else {
-        
         if (mounted) {
           setState(() {
             _isDataLoading = false;
@@ -160,7 +146,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         }
       }
     } catch (e) {
-      
       if (mounted) {
         setState(() {
           _isDataLoading = false;
@@ -170,53 +155,42 @@ class _DashboardScreenState extends State<DashboardScreen>
     }
   }
 
-  void _fetchRecentActivities() {
-    setState(() {
-      _isActivitiesLoading = true;
-    });
-
-    try {
-      
-      final activitiesRef = FirebaseFirestore.instance
-          .collection('activities')
-          .orderBy('timestamp', descending: true)
-          .limit(5);
-
-      
-      _activitiesSubscription = activitiesRef.snapshots().listen((snapshot) {
-        if (mounted) {
-          final activities = snapshot.docs.map((doc) {
-            final data = doc.data();
-            return {
-              'id': doc.id,
-              'title': data['title'] ?? 'Aktivitas',
-              'description': data['description'] ?? 'Tidak ada deskripsi',
-              'timestamp': data['timestamp'] ?? Timestamp.now(),
-              'type': data['type'] ?? 'other',
-            };
-          }).toList();
-
-          setState(() {
-            _recentActivities = activities;
-            _isActivitiesLoading = false;
-          });
-        }
-      }, onError: (error) {
-        if (mounted) {
-          setState(() {
-            _isActivitiesLoading = false;
-          });
-          _showErrorSnackBar('Error fetching activities: $error');
-        }
-      });
-    } catch (e) {
+  void _loadDummyData() {
+    Future.delayed(const Duration(milliseconds: 800), () {
       if (mounted) {
+        final dummyActivities = [
+          {
+            'id': '1',
+            'title': 'Penduduk Baru',
+            'description': 'Data Altaf telah ditambahkan ke data penduduk',
+            'timestamp': Timestamp.fromDate(
+                DateTime.now().subtract(const Duration(minutes: 5))),
+            'type': 'add',
+          },
+          {
+            'id': '2',
+            'title': 'Perubahan Data',
+            'description': 'Data Altaf Fattah telah diperbarui',
+            'timestamp': Timestamp.fromDate(
+                DateTime.now().subtract(const Duration(hours: 2))),
+            'type': 'update',
+          },
+          {
+            'id': '3',
+            'title': 'Penghapusan Data',
+            'description': 'Data Nopal telah dihapus dari sistem',
+            'timestamp': Timestamp.fromDate(
+                DateTime.now().subtract(const Duration(days: 1))),
+            'type': 'delete',
+          },
+        ];
+
         setState(() {
+          _recentActivities = dummyActivities;
           _isActivitiesLoading = false;
         });
-        _showErrorSnackBar('Error: ${e.toString()}');
       }
-    }
+    });
   }
 
   void _showErrorSnackBar(String message) {
@@ -261,30 +235,25 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+// membersihkan resource atau objek yang tidak lagi diperlukan ketika sebuah widget dihapus dari widget tree. Ini adalah bagian dari siklus hidup widget StatefulWidget.
   @override
   void dispose() {
     _animationController.dispose();
     _timer.cancel();
-    _activitiesSubscription?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, 
-        statusBarIconBrightness:
-            Brightness.light, 
-        systemNavigationBarColor: Colors.white, 
-        systemNavigationBarIconBrightness:
-            Brightness.dark, 
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        extendBodyBehindAppBar:
-            true, 
-        
+        extendBodyBehindAppBar: true,
         body: _isLoading ? _buildLoadingView() : _buildDashboard(context),
       ),
     );
@@ -323,7 +292,6 @@ class _DashboardScreenState extends State<DashboardScreen>
           ),
           child: Column(
             children: [
-              
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 8, 0),
                 child: Row(
@@ -349,8 +317,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ],
                 ),
               ),
-
-              
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                 child: Row(
@@ -378,7 +344,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                     const Spacer(),
                     Row(
                       children: [
-                        
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 6),
@@ -396,7 +361,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ),
                         ),
                         const SizedBox(width: 8),
-                        
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 6),
@@ -431,33 +395,27 @@ class _DashboardScreenState extends State<DashboardScreen>
             ],
           ),
         ),
-        
         Expanded(
           child: RefreshIndicator(
             onRefresh: () async {
               await _fetchStatistics();
-              _fetchRecentActivities();
+              _loadDummyData();
             },
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.all(16.0),
               children: [
-                
                 _buildSectionTitle('Statistik Penduduk'),
                 _isDataLoading ? _buildLoadingStats() : _buildStatisticsCards(),
-
                 const SizedBox(height: 10),
-                
                 _buildSectionTitle('Menu Utama'),
                 _buildMenuGrid(context),
                 const SizedBox(height: 20),
-                
                 _buildSectionTitle('Aktivitas Terbaru'),
-                const SizedBox(height: 6), 
+                const SizedBox(height: 6),
                 _isActivitiesLoading
                     ? _buildLoadingActivities()
                     : _buildRecentActivity(),
-
                 const SizedBox(height: 30),
               ],
             ),
@@ -589,7 +547,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       builder: (context, child) {
         final delay = index * 0.2;
         final start = delay;
-        
+
         final end = min(start + 0.4, 1.0);
 
         final animation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -688,19 +646,22 @@ class _DashboardScreenState extends State<DashboardScreen>
         'title': 'Laporan',
         'icon': Icons.bar_chart,
         'color': Colors.orange,
-        'onTap': () => Navigator.push(context, 
-        MaterialPageRoute(builder: (_) => const LaporanScreen())),
+        'onTap': () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => const LaporanScreen())),
       },
       {
-        'title': 'Pengaturan',
-        'icon': Icons.settings,
+        'title': 'Jadwal Rapat',
+        'icon': Icons.event_note,
         'color': Colors.purple,
-        'onTap': () {
-          
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Fitur Pengaturan akan segera hadir')),
-          );
-        },
+        // 'onTap': () {
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     const SnackBar(content: Text('Fitur Pengaturan akan segera hadir')),
+        //   );
+        // },
+        'onTap': () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const JadwalRapatScreen()),
+            ),
       },
     ];
 
@@ -739,7 +700,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       builder: (context, child) {
         final delay = 0.4 + (index * 0.1);
         final start = delay;
-        
+
         final end = min(start + 0.4, 1.0);
 
         final animation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -904,7 +865,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
-  
   String _formatTimestamp(Timestamp timestamp) {
     final now = DateTime.now();
     final date = timestamp.toDate();
@@ -924,7 +884,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     }
   }
 
-  
   IconData _getActivityIcon(String type) {
     switch (type) {
       case 'add':
@@ -938,7 +897,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     }
   }
 
-  
   Color _getActivityColor(String type) {
     switch (type) {
       case 'add':

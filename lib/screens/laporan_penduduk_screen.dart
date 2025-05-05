@@ -243,36 +243,36 @@ class _LaporanPendudukScreenState extends State<LaporanPendudukScreen> {
   Widget _buildReportList() {
     final reports = [
       {
-        'title': 'Jalan Rusak di RT 03',
-        'reporter': 'Ahmad Sulaiman',
+        'title': 'Jalan Rusak',
+        'reporter': 'Adit',
         'date': '15 Mar 2023',
         'category': 'Keluhan',
         'status': 'Selesai',
       },
       {
         'title': 'Permintaan Bantuan Banjir',
-        'reporter': 'Siti Aminah',
+        'reporter': 'Jarwo',
         'date': '10 Mar 2023',
         'category': 'Permintaan',
         'status': 'Proses',
       },
       {
         'title': 'Saran Pembangunan Taman',
-        'reporter': 'Budi Santoso',
+        'reporter': 'Budi Santosa',
         'date': '05 Mar 2023',
         'category': 'Saran',
         'status': 'Selesai',
       },
       {
-        'title': 'Lampu Jalan Mati di RT 05',
-        'reporter': 'Dewi Kartika',
+        'title': 'Lampu Jalan Mati',
+        'reporter': 'Dewi Kartikasari',
         'date': '01 Mar 2023',
         'category': 'Keluhan',
         'status': 'Selesai',
       },
       {
         'title': 'Permintaan Perbaikan Saluran Air',
-        'reporter': 'Hendra Wijaya',
+        'reporter': 'Hendra Wijayanto',
         'date': '25 Feb 2023',
         'category': 'Permintaan',
         'status': 'Proses',
@@ -419,7 +419,7 @@ class _LaporanPendudukScreenState extends State<LaporanPendudukScreen> {
               ),
               const SizedBox(height: 8),
               const Text(
-                'Jalan di RT 03 rusak parah setelah hujan deras kemarin. Beberapa lubang cukup dalam dan membahayakan pengendara motor. Mohon segera diperbaiki untuk menghindari kecelakaan.',
+                'Tes.',
                 style: TextStyle(
                   fontSize: 14,
                 ),
