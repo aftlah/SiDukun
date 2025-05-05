@@ -7,7 +7,7 @@
 ## 📱 Fitur Unggulan
 
 - 📋 **Manajemen Data Warga**  
-  Tambah, edit, dan hapus data penduduk seperti nama, NIK, alamat, jenis kelamin, pekerjaan, dan status keluarga.
+  Tambah, edit, dan hapus data penduduk seperti nama, NIK, alamat, jenis kelamin,agama, pekerjaan, dan status perkawinan.
 
 - 🔍 **Pencarian Cepat**  
   Temukan data warga berdasarkan NIK atau nama dengan mudah dan cepat.
