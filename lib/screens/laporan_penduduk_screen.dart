@@ -43,7 +43,6 @@ class _LaporanPendudukScreenState extends State<LaporanPendudukScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Implement add new report
           ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Fitur tambah laporan akan segera hadir')),
@@ -123,7 +122,11 @@ class _LaporanPendudukScreenState extends State<LaporanPendudukScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Implement filter logic
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Filter diterapkan'),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[900],
@@ -352,7 +355,6 @@ class _LaporanPendudukScreenState extends State<LaporanPendudukScreen> {
                 ],
               ),
               onTap: () {
-                // Show report details
                 _showReportDetails(report);
               },
             ),

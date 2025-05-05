@@ -89,9 +89,8 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
       initialDate: birthDate,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
-      locale: const Locale('id', 'ID'), // Format Indonesia
+      locale: const Locale('id', 'ID'), 
       builder: (context, child) {
-        // Gunakan null-aware operator untuk aman
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
@@ -100,7 +99,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
               onSurface: Colors.black,
             ),
           ),
-          child: child ?? const SizedBox(), // Aman dari null
+          child: child ?? const SizedBox(), 
         );
       },
     );
@@ -152,7 +151,6 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
         tempatLahir: tempatLahirController.text,
         noHp: noHpController.text,
         email: emailController.text,
-        // pendidikan: pendidikanController.text,
         createdAt: widget.penduduk?.createdAt ?? DateTime.now(),
         updatedAt: widget.penduduk?.updatedAt ?? DateTime.now(),
       );
@@ -297,7 +295,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
                           return null;
                         },
                         keyboardType: TextInputType.number,
-                        maxLength: 16, // <-- Tambahkan ini
+                        maxLength: 16,
                       ),
 
                       _buildTextField(

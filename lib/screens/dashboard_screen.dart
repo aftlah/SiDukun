@@ -355,7 +355,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                 child: Row(
                   children: [
-                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -377,7 +376,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ],
                     ),
                     const Spacer(),
-                    
                     Row(
                       children: [
                         
@@ -433,7 +431,6 @@ class _DashboardScreenState extends State<DashboardScreen>
             ],
           ),
         ),
-
         
         Expanded(
           child: RefreshIndicator(
@@ -450,13 +447,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 _isDataLoading ? _buildLoadingStats() : _buildStatisticsCards(),
 
                 const SizedBox(height: 10),
-
                 
                 _buildSectionTitle('Menu Utama'),
                 _buildMenuGrid(context),
-
                 const SizedBox(height: 20),
-
                 
                 _buildSectionTitle('Aktivitas Terbaru'),
                 const SizedBox(height: 6), 

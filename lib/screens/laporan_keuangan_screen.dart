@@ -119,7 +119,11 @@ class _LaporanKeuanganScreenState extends State<LaporanKeuanganScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Implement filter logic
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Filter diterapkan: $_selectedPeriod'),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[900],

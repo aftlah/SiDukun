@@ -4,7 +4,7 @@ import '../services/firestore_service.dart';
 import '../models/penduduk.dart';
 import '../widgets/penduduk_card.dart';
 import 'add_edit_penduduk_screen.dart';
-import 'package:intl/intl.dart'; // Added for DateFormat
+import 'package:intl/intl.dart'; 
 
 class PendudukListScreen extends StatefulWidget {
   const PendudukListScreen({super.key});
@@ -16,15 +16,15 @@ class PendudukListScreen extends StatefulWidget {
 class _PendudukListScreenState extends State<PendudukListScreen>
     with SingleTickerProviderStateMixin {
   final FirestoreService firestoreService = FirestoreService();
-  List<Penduduk> pendudukList = []; // Define and initialize pendudukList
+  List<Penduduk> pendudukList = []; 
   late AnimationController _animationController;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
-  // Add filter state variables
+  
   String _selectedGender = 'Semua';
   String _selectedMaritalStatus = 'Semua';
-  String _selectedReligion = 'Semua'; // Added religion filter
+  String _selectedReligion = 'Semua'; 
   bool _isFilterActive = false;
 
   @override
@@ -50,7 +50,7 @@ class _PendudukListScreenState extends State<PendudukListScreen>
     });
   }
 
-  // Reset filters
+  
   void _resetFilters() {
     setState(() {
       _selectedGender = 'Semua';
@@ -103,7 +103,7 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                   ],
                 ),
                 const Divider(),
-                // Make the content scrollable if it's too long
+                
                 Flexible(
                   child: SingleChildScrollView(
                     child: Column(
@@ -129,7 +129,7 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context); // Close the dialog
+                        Navigator.pop(context); 
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -137,7 +137,7 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                                 AddEditPendudukScreen(penduduk: penduduk),
                           ),
                         ).then((_) {
-                          // Refresh the list when returning from edit screen
+                          
                           setState(() {});
                         });
                       },
@@ -373,7 +373,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
     );
   }
 
-  // Helper method to build detail items
   Widget _buildDetailItem(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -411,7 +410,9 @@ class _PendudukListScreenState extends State<PendudukListScreen>
         body: RefreshIndicator(
           onRefresh: () async {
             setState(() {
-              // Refresh state
+              _searchController.clear();
+              _filterPenduduk('');
+              _resetFilters();
             });
             return Future.value();
           },
@@ -485,7 +486,7 @@ class _PendudukListScreenState extends State<PendudukListScreen>
               ),
             ),
             const SizedBox(width: 8),
-            // Filter button with indicator
+
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -531,7 +532,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
     );
   }
 
-  // Fixed active filters widget to prevent duplicate chips
   Widget _buildActiveFilters() {
     if (!_isFilterActive) {
       return const SliverToBoxAdapter(child: SizedBox.shrink());
@@ -539,7 +539,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
 
     List<Widget> filterChips = [];
 
-    // Only add gender chip if it's not "Semua"
     if (_selectedGender != 'Semua') {
       filterChips.add(
         Chip(
@@ -558,7 +557,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
       );
     }
 
-    // Add religion chip if it's not "Semua"
     if (_selectedReligion != 'Semua') {
       filterChips.add(
         Chip(
@@ -577,7 +575,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
       );
     }
 
-    // Add marital status chip if it's not "Semua"
     if (_selectedMaritalStatus != 'Semua') {
       filterChips.add(
         Chip(
@@ -731,7 +728,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
               .toList();
         }
 
-        // Add religion filter if implemented in your Penduduk model
         if (_selectedReligion != 'Semua') {
           filteredPenduduk = filteredPenduduk
               .where((p) => p.agama == _selectedReligion)
@@ -824,7 +820,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
   //   );
   // }
 
-  // In the _buildAnimatedPendudukCard method of PendudukListScreen class
   Widget _buildAnimatedPendudukCard(Penduduk penduduk, int index) {
     final animation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
@@ -854,12 +849,10 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                 builder: (_) => AddEditPendudukScreen(penduduk: penduduk),
               ),
             ).then((_) {
-              // Refresh the list when returning from edit screen
               setState(() {});
             }),
             onViewDetails: () => _showPendudukDetails(context, penduduk),
             onDelete: () {
-              // Hapus dari database atau list
               firestoreService.deletePenduduk(penduduk.id).then((_) {
                 setState(() {
                   pendudukList.remove(penduduk);
@@ -878,8 +871,11 @@ class _PendudukListScreenState extends State<PendudukListScreen>
         context,
         MaterialPageRoute(builder: (_) => const AddEditPendudukScreen()),
       ).then((_) {
-        // Refresh the list when returning from add screen
-        setState(() {});
+        setState(() {
+          _searchController.clear();
+          _filterPenduduk('');
+          _resetFilters();
+        });
       }),
       backgroundColor: Colors.blue[900],
       icon: const Icon(Icons.person_add, color: Colors.white),
@@ -898,7 +894,7 @@ class _PendudukListScreenState extends State<PendudukListScreen>
 
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Allow the modal to be larger
+      isScrollControlled: true, 
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -908,7 +904,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
             return SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.all(20),
-                // Add padding to account for bottom inset (keyboard, etc.)
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -923,7 +918,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                     ),
                     const SizedBox(height: 20),
 
-                    // Gender filter
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -989,7 +983,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                             ),
                           ],
                         ),
-                        // Religion filter
                         const SizedBox(height: 8),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -1027,7 +1020,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                       ],
                     ),
                     const Divider(),
-                    // Marital status filter
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1095,7 +1087,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
                         const SizedBox(width: 16),
                         ElevatedButton(
                           onPressed: () {
-                            // Apply filters and close modal
                             _applyFilters(
                                 tempGender, tempMaritalStatus, tempReligion);
                             Navigator.pop(context);
