@@ -15,7 +15,7 @@ class AddEditPendudukScreen extends StatefulWidget {
 }
 
 class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final _form = GlobalKey<FormState>();
   final FirestoreService _firestoreService = FirestoreService();
 
   late TextEditingController nikController;
@@ -81,6 +81,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
     selectedStatus = widget.penduduk?.statusNikah;
     selectedGender = widget.penduduk?.gender;
     selectedAgama = widget.penduduk?.agama;
+    
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -134,7 +135,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
   }
 
   void _savePenduduk() async {
-    if (_formKey.currentState!.validate()) {
+    if (_form.currentState!.validate()) {
       setState(() {
         isLoading = true;
       });
@@ -236,7 +237,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
-              key: _formKey,
+              key: _form,
               child: Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(
@@ -381,14 +382,12 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
                         validator: (value) =>
                             value == null ? 'Pilih agama' : null,
                       ),
-
                       _buildTextField(
                         controller: tempatLahirController,
                         label: 'Tempat Lahir',
                         icon: Icons.location_on,
                         hint: 'Masukkan tempat lahir',
                       ),
-
                       _buildDatePicker(
                         controller: tanggalLahirController,
                         label: 'Tanggal Lahir',
@@ -396,7 +395,6 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
                         hint: 'Pilih tanggal lahir',
                         onTap: () => _selectDate(context),
                       ),
-
                       _buildTextField(
                         controller: pekerjaanController,
                         label: 'Pekerjaan',
@@ -409,7 +407,6 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
                           return null;
                         },
                       ),
-
                       _buildDropdown(
                         value: selectedStatus,
                         label: 'Status Perkawinan',
@@ -425,9 +422,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
                         validator: (value) =>
                             value == null ? 'Pilih status perkawinan' : null,
                       ),
-
                       const SizedBox(height: 24),
-
                       // Save Button
                       ElevatedButton(
                         onPressed: isLoading ? null : _savePenduduk,
@@ -476,10 +471,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
                                 ],
                               ),
                       ),
-
                       const SizedBox(height: 16),
-
-                      // Cancel Button
                       TextButton(
                         onPressed: () => Navigator.pop(context),
                         child: const Text(
@@ -500,45 +492,6 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
       ),
     );
   }
-
-  // Widget _buildTextField({
-  //   required TextEditingController controller,
-  //   required String label,
-  //   required IconData icon,
-  //   required String hint,
-  //   String? Function(String?)? validator,
-  //   TextInputType keyboardType = TextInputType.text,
-  //   int maxLines = 1,
-  // }) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(bottom: 16),
-  //     child: TextFormField(
-  //       controller: controller,
-  //       decoration: InputDecoration(
-  //         labelText: label,
-  //         hintText: hint,
-  //         prefixIcon: Icon(icon, color: Colors.blue[900]),
-  //         border: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(10),
-  //           borderSide: BorderSide(color: Colors.blue[900] ?? Colors.blue),
-  //         ),
-  //         focusedBorder: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(10),
-  //           borderSide:
-  //               BorderSide(color: Colors.blue[900] ?? Colors.blue, width: 2),
-  //         ),
-  //         filled: true,
-  //         fillColor: Colors.grey.shade50,
-  //         contentPadding:
-  //             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-  //       ),
-  //       validator: validator,
-  //       keyboardType: keyboardType,
-  //       maxLines: maxLines,
-  //     ),
-  //   );
-  // }
-
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,

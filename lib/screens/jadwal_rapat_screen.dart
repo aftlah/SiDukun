@@ -174,7 +174,7 @@ class _JadwalRapatScreenState extends State<JadwalRapatScreen>
     }
   }
 
-  List<Map<String, dynamic>> _getFilteredMeetings() {
+  List<Map<String, dynamic>> _getFilteredMeeting() {
     if (_filterStatus == "Semua") {
       return _jadwalRapat;
     } else {
@@ -474,7 +474,7 @@ class _JadwalRapatScreenState extends State<JadwalRapatScreen>
   }
 
   Widget _buildMeetingList() {
-    final filteredMeetings = _getFilteredMeetings();
+    final filteredMeetings = _getFilteredMeeting();
 
     if (filteredMeetings.isEmpty) {
       return Center(
