@@ -312,7 +312,6 @@ class _PendudukListScreenState extends State<PendudukListScreen>
   //   );
   // }
 
-  // Helper methods for the detail dialog
   Widget _buildDetailSection(String title, List<Widget> children) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

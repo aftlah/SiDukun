@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../models/penduduk.dart';
 import '../services/firestore_service.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
+// import 'package:intl/date_symbol_data_local.dart';
 import 'package:another_flushbar/flushbar.dart';
 
 class AddEditPendudukScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
 
   DateTime birthDate = DateTime.now();
 
-  final BaseColor = Colors.blue[900];
+  // final BaseColor = Colors.blue[900];
 
   String? selectedStatus;
   String? selectedGender;
@@ -81,7 +81,6 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
     selectedStatus = widget.penduduk?.statusNikah;
     selectedGender = widget.penduduk?.gender;
     selectedAgama = widget.penduduk?.agama;
-    
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -90,7 +89,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
       initialDate: birthDate,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
-      locale: const Locale('id', 'ID'), 
+      locale: const Locale('id', 'ID'),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -100,7 +99,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
               onSurface: Colors.black,
             ),
           ),
-          child: child ?? const SizedBox(), 
+          child: child ?? const SizedBox(),
         );
       },
     );
@@ -114,25 +113,25 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
     }
   }
 
-  void _showSuccessSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            const Icon(Icons.check_circle, color: Colors.white),
-            const SizedBox(width: 10),
-            Text(message),
-          ],
-        ),
-        backgroundColor: Colors.green.shade600,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
+  // void _showSuccessSnackBar(String message) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Row(
+  //         children: [
+  //           const Icon(Icons.check_circle, color: Colors.white),
+  //           const SizedBox(width: 10),
+  //           Text(message),
+  //         ],
+  //       ),
+  //       backgroundColor: Colors.green.shade600,
+  //       behavior: SnackBarBehavior.floating,
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //       duration: const Duration(seconds: 2),
+  //     ),
+  //   );
+  // }
 
   void _savePenduduk() async {
     if (_form.currentState!.validate()) {
@@ -177,7 +176,8 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
           Navigator.pop(context);
 
           Flushbar(
-            message: 'Data penduduk berhasil ${widget.penduduk == null ? 'ditambahkan' : 'diperbarui'}',
+            message:
+                'Data penduduk berhasil ${widget.penduduk == null ? 'ditambahkan' : 'diperbarui'}',
             backgroundColor: Colors.green[600]!,
             margin: const EdgeInsets.all(16),
             borderRadius: BorderRadius.circular(10),
@@ -193,6 +193,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
         //     backgroundColor: Colors.red,
         //   ),
         // );
+        if (mounted) {
           Flushbar(
             message: 'Terjadi kesalahan: $e',
             backgroundColor: Colors.red[600]!,
@@ -202,6 +203,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
             icon: const Icon(Icons.check_circle, color: Colors.white),
             flushbarPosition: FlushbarPosition.TOP,
           ).show(context);
+        }
       } finally {
         if (mounted) {
           setState(() {
@@ -492,6 +494,7 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
       ),
     );
   }
+
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
