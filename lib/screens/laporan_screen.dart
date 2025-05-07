@@ -152,19 +152,19 @@ class _LaporanScreenState extends State<LaporanScreen> {
     final recentReports = [
       {
         'title': 'Laporan Keuangan Q1 2023',
-        'date': '15 Apr 2023',
+        'date': '15 April 2023',
         'type': 'Keuangan',
         'status': 'Selesai',
       },
       {
         'title': 'Laporan Bantuan Sosial',
-        'date': '10 Mar 2023',
+        'date': '10 Maret 2023',
         'type': 'Warga',
         'status': 'Selesai',
       },
       {
         'title': 'Laporan Pembangunan Jalan',
-        'date': '28 Feb 2023',
+        'date': '28 Februari 2023',
         'type': 'Keuangan',
         'status': 'Proses',
       },
@@ -175,7 +175,7 @@ class _LaporanScreenState extends State<LaporanScreen> {
         itemCount: recentReports.length,
         itemBuilder: (context, index) {
           final report = recentReports[index];
-          final isFinancial = report['type'] == 'Keuangan';
+          final isFinance = report['type'] == 'Keuangan';
 
           return Card(
             elevation: 2,
@@ -188,7 +188,7 @@ class _LaporanScreenState extends State<LaporanScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => isFinancial
+                    builder: (_) => isFinance
                         ? const LaporanKeuanganScreen()
                         : const LaporanPendudukScreen(),
                   ),
@@ -197,12 +197,12 @@ class _LaporanScreenState extends State<LaporanScreen> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               leading: CircleAvatar(
-                backgroundColor: isFinancial
+                backgroundColor: isFinance
                     ? Colors.green.withOpacity(0.1)
                     : Colors.blue.withOpacity(0.1),
                 child: Icon(
-                  isFinancial ? Icons.monetization_on : Icons.people,
-                  color: isFinancial ? Colors.green : Colors.blue,
+                  isFinance ? Icons.monetization_on : Icons.people,
+                  color: isFinance ? Colors.green : Colors.blue,
                 ),
               ),
               title: Text(

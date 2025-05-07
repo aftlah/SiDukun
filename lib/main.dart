@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SiDukun - Sistem Informasi Data Penduduk',
-      theme: ThemeData(primarySwatch: Colors.green),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const LoginScreen(),
       debugShowCheckedModeBanner: false,
 

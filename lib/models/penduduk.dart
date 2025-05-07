@@ -15,7 +15,7 @@ class Penduduk {
   String noHp;
   String email;
 
-// Constructor itu untuk menginisialisasi objek ketika objek tersebut dibuat.
+  // Constructor itu buat menginisialisasi objek ketika objek tersebut dibuat.
   Penduduk({
     required this.id,
     required this.nik,

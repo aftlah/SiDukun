@@ -193,7 +193,6 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
         //     backgroundColor: Colors.red,
         //   ),
         // );
-        if (mounted) {
           Flushbar(
             message: 'Terjadi kesalahan: $e',
             backgroundColor: Colors.red[600]!,
@@ -203,7 +202,6 @@ class _AddEditPendudukScreenState extends State<AddEditPendudukScreen> {
             icon: const Icon(Icons.check_circle, color: Colors.white),
             flushbarPosition: FlushbarPosition.TOP,
           ).show(context);
-        }
       } finally {
         if (mounted) {
           setState(() {
