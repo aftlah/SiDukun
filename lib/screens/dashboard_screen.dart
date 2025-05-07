@@ -357,7 +357,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                               color: Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                            ),
+                            ),  
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -488,7 +488,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     return '${now.day} ${months[now.month - 1]} ${now.year}';
   }
 
-    Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(String title) {
     return Row(
       children: [
         Container(
